@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "@/components/shared/ThemeToggle";
@@ -26,8 +27,8 @@ export default function Header() {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
-    // { name: "Features", path: "/#features" },
-    // { name: "Community", path: "/#community" },
+    // { name: 'Features', path: '/#features' },
+    // { name: 'Community', path: '/#community' },
   ];
 
   return (
@@ -41,8 +42,34 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold">
-            <span className="text-gradient">Quranium</span>
+          <Link href="/" className="relative">
+            <div className="flex items-center">
+              <div className="w-10 h-10 relative mr-2">
+                <Image
+                  src="https://ml.globenewswire.com/Resource/Download/0f9c62e7-14ba-4c5f-9de9-03dd51044374?size=2"
+                  alt="Quranium Logo"
+                  width={40}
+                  height={40}
+                  className="object-contain"
+                  priority
+                />
+              </div>
+              <span className="text-2xl font-bold text-gradient">Quranium</span>
+            </div>
+
+            {/* Subtle glow effect behind logo */}
+            <motion.div
+              className="absolute -inset-1 bg-primary/10 dark:bg-primary/20 rounded-full blur-md -z-10"
+              animate={{
+                opacity: [0.5, 0.8, 0.5],
+                scale: [1, 1.05, 1],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -143,6 +170,7 @@ export default function Header() {
                 <Link
                   href="/dashboard"
                   className="bg-primary text-white py-2 px-4 rounded-lg text-center"
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Launch App
                 </Link>
